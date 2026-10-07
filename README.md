@@ -17,6 +17,34 @@
 
 ---
 
+## 📝 Registro de Cambios (Examen Unidad 1)
+
+A continuación se detallan las implementaciones realizadas en el proyecto, junto con los archivos y secciones afectadas:
+
+### 1. Saneamiento de Entradas (Punto 2)
+Se diseñó una clase utilitaria pura, completamente desacoplada de la interfaz gráfica y de red, responsable de limpiar las entradas del usuario (trim, colapso de espacios, eliminación de caracteres de control).
+* **Archivos creados/afectados:**
+  * `app/lib/core/utils/input_sanitizer.dart` (Nueva clase `InputSanitizer`)
+
+### 2. Reglas de Validación Previas a la Red (Punto 3)
+Se implementaron reglas de negocio (DNI de 8 dígitos, formato de correo, etc.) que se verifican *antes* de realizar cualquier petición al servidor, abortando el flujo de manera controlada en caso de error.
+* **Archivos creados/afectados:**
+  * `app/lib/core/utils/validation_exception.dart` (Nueva excepción `ValidationException`)
+  * `app/lib/core/utils/input_validator.dart` (Nueva clase `InputValidator` que encapsula las reglas)
+  * `app/lib/features/auth/presentation/viewmodels/auth_viewmodel.dart` (Modificado el método `login()` para interceptar el envío y validar localmente)
+
+### 3. Pruebas Unitarias de Autenticación y Flujo (Punto 4)
+Se programó una suite de pruebas para validar los estados del ViewModel de autenticación sin depender de servicios externos, utilizando un mock del repositorio.
+* **Archivos creados/afectados:**
+  * `app/test/auth_viewmodel_test.dart` (Nuevos tests comprobando el estado en frío, flujo exitoso y flujo denegado)
+
+### 4. Pruebas Unitarias de Saneamiento y Rechazo (Punto 5)
+Se desarrollaron aserciones para verificar la correcta limpieza de cadenas complejas y demostrar, mediante contadores (spies), que ante entradas inválidas el repositorio no recibe ninguna llamada.
+* **Archivos creados/afectados:**
+  * `app/test/sanitizer_validator_test.dart` (Nuevos tests de saneamiento efectivo e interrupción de peticiones a la red)
+
+---
+
 ## Descripción
 
 **SITRA-Luz** es una aplicación móvil orientada a la gestión y trazabilidad interna de medicamentos e insumos médicos en la Clínica La Luz.
